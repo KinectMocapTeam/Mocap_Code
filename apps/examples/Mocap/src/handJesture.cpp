@@ -63,8 +63,8 @@ void HandJesture::setup() {
     trail_two = 0;
     intial_trail_one = 0;
     intial_trail_two = 0;
-    soundClick.loadSound("sound/4beat.mp3");
-    soundClick.setVolume(100);
+    //soundClick.loadSound("sound/4beat.mp3");
+    //soundClick.setVolume(100);
     
 	ofSetLogLevel(0);
 	ofLog(OF_LOG_VERBOSE, "Start setup()");
@@ -458,6 +458,8 @@ void HandJesture::draw() {
 		ofPopMatrix();
 	} 
 	else {
+        //set the background full screen
+       // ofSetFullscreen(true);
         //draw a white background
         ofBackground(255,255,255);	
         //if showUserFeedback is on show the kinect input
