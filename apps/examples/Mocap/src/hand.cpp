@@ -204,14 +204,14 @@ void Hand::fireMouseMove() {
 
 /*This is there the mouse clicked */
 void Hand::fireMouseDown() {
-	cout << "Mouse Down!!+++++++" << endl;
+	//cout << "Mouse Down!!+++++++" << endl;
     //set mouseclick to true
    // handClicked = true;
 
 }
 
 void Hand::fireMouseUp() {
-	cout << "Mouse Up!!-----------" << endl;
+	//cout << "Mouse Up!!-----------" << endl;
 	//set mouseclick to false;
   //  handClicked=false;
 }

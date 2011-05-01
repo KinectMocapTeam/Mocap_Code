@@ -12,8 +12,10 @@
 Shape* Shape::board[10];
 // Struct that stores arrays of Colors and Sounds
 ofColor colors[10];
-ofSoundPlayer sounds[10];
-ofSoundPlayer generic_sounds[10];
+ofSoundPlayer sounds[5];
+ofSoundPlayer generic_sounds[5];
+ofSoundPlayer retro_sounds[5];
+ofSoundPlayer business_sounds[5];
 //An array of the last hand positions
 int GENERIC = 0;
 int BUSINESS = 1;
@@ -111,10 +113,60 @@ void HandJesture::loadSounds()
     generic_sounds[2].setVolume(0.50f);
     generic_sounds[2].setMultiPlay(true);
     generic_sounds[2].setLoop(false);
+    
+    /* 
+     Business
+     */
+    // background sounds
+    business_sounds[0].loadSound("sound/Business/background.mp3");
+    business_sounds[0].setVolume(0.25f);
+    business_sounds[0].setMultiPlay(true);
+    business_sounds[0].setLoop(true);
+    
+    //explosion sounds
+    business_sounds[1].loadSound("sound/Business/explosion.mp3");
+    business_sounds[1].setVolume(0.50f);
+    business_sounds[1].setMultiPlay(true);
+    business_sounds[1].setLoop(false);
+    
+    //collision sounds
+    business_sounds[2].loadSound("sound/Business/collision.mp3");
+    business_sounds[2].setVolume(0.50f);
+    business_sounds[2].setMultiPlay(true);
+    business_sounds[2].setLoop(false);
+
+    
+    /* 
+     Retro
+     */
+    // background sounds
+    retro_sounds[0].loadSound("sound/Retro/background.mp3");
+    retro_sounds[0].setVolume(0.25f);
+    retro_sounds[0].setMultiPlay(true);
+    retro_sounds[0].setLoop(true);
+    
+    //explosion sounds
+    retro_sounds[1].loadSound("sound/Retro/explosion.mp3");
+    retro_sounds[1].setVolume(0.50f);
+    retro_sounds[1].setMultiPlay(true);
+    retro_sounds[1].setLoop(false);
+    
+    //collision sounds
+    retro_sounds[2].loadSound("sound/Retro/collision.mp3");
+    retro_sounds[2].setVolume(0.50f);
+    retro_sounds[2].setMultiPlay(true);
+    retro_sounds[2].setLoop(false);
+
 }
 /*Allocates sounds and colors based on selected theme*/
 void HandJesture::setTheme(int theme)
 {
+    
+    if(sounds[0].getIsPlaying())
+    {
+        printf("TURNING OFF BACKGROUND SOUND \n");
+        sounds[0].stop();
+    }
     if(theme==GENERIC)
     {
         printf("Setting a Generic Theme \n");
@@ -156,7 +208,6 @@ void HandJesture::setTheme(int theme)
         sounds[0]=generic_sounds[0];
         sounds[1]=generic_sounds[1];
         sounds[2]=generic_sounds[2];
-        sounds[0].play();
        /* sounds[0].loadSound("sound/Generic/Sandstorm.mp3");
         sounds[0].setVolume(0.00f);
         sounds[0].setMultiPlay(true);
@@ -199,6 +250,11 @@ void HandJesture::setTheme(int theme)
             colors[5].r=171;
             colors[5].g=159;
             colors[5].b=255;
+        
+        //set the default sounds to busneiss sounds
+        sounds[0]=business_sounds[0];
+        sounds[1]=business_sounds[1];
+        sounds[2]=business_sounds[2];
     }
     else if(theme == RETRO)
     {
@@ -233,7 +289,21 @@ void HandJesture::setTheme(int theme)
             colors[5].r=255;
             colors[5].g=0;
             colors[5].b=255;
+        
+        //set the default sounds to retro sounds
+        sounds[0]=retro_sounds[0];
+        sounds[1]=retro_sounds[1];
+        sounds[2]=retro_sounds[2];
+
         }
+    else
+    {
+        printf("Invalid Theme");
+        return;
+    }
+    //if the background sound is already playing stop it
+       
+    sounds[0].play();
 }
 
 void HandJesture::setup() {
