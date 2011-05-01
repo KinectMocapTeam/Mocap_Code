@@ -373,6 +373,14 @@ bool Shape::hoveredOver(float x, float y)
 	   (y > top)&&(y < bottom)){
 		return true;
 	}
+    if(((x-20) > left)&&((x-20) < right)&&
+	   ((y-20) > top)&&((y-20) < bottom)){
+		return true;
+	}
+    if(((x +20) > left)&&((x +20)< right)&&
+	   ((y+20) > top)&&((y+20) < bottom)){
+		return true;
+	}
 	else return false;
 	
 }

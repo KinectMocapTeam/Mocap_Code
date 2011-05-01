@@ -681,7 +681,7 @@ void HandJesture::draw() {
             //draws the hand centering dot
 			ofSetColor(255, 0 , 0);
             ofFill();
-            ofEllipse(contourFinder.blobs[i].centroid.x, contourFinder.blobs[i].centroid.y, 4, 4);
+            ofEllipse(contourFinder.blobs[i].centroid.x, contourFinder.blobs[i].centroid.y, 20, 20);
 			
 			 centroidX = 0;
 			 centroidY = 0;
@@ -706,6 +706,11 @@ void HandJesture::draw() {
         //draw a theme background
         ofBackground(colors[0].r,colors[0].g,colors[0].b);	
         sounds[0].setVolume(0.25f);
+        //if showUserFeedback is on show the kinect input
+        if(showUserFeedback)
+        {
+            grayImage.draw(0, 0,screen_width, screen_height);
+        }	
 
 		//msgFont.drawString("Press Space Key to start.", 20, ofGetHeight()-60);
 		
@@ -719,10 +724,11 @@ void HandJesture::draw() {
             
             //contourFinder.blobs[i].draw(0,0);
             
-            //set the hand centering dot color (red)
-			ofSetColor(255, 0 , 0);
+            //set the hand centering dot color (white)
+			ofSetColor(30, 30,30);
             ofFill();
-           
+            //ofEllipse(contourFinder.blobs[i].centroid.x, contourFinder.blobs[i].centroid.y, 20, 20);
+
 			 centroidX = 0;
 			 centroidY = 0;
             
@@ -777,18 +783,14 @@ void HandJesture::draw() {
 		//draw interactive shapes if there is no hand
 		if(contourFinder.nBlobs==0)HandJesture::drawShapes(0);
 		
-		//if showUserFeedback is on show the kinect input
-			if(showUserFeedback)
-			{
-				grayImage.draw(screen_width-200, screen_height-150, 200, 150);
-			}	
+		
 		ofPopMatrix();
         
 	}
     //set the font color
 	ofSetColor(0, 0, 0);
     //print the videos frames per second
-	msgFont.drawString("fps: "+ ofToString(ofGetFrameRate()), 20, ofGetHeight()-40);
+	//msgFont.drawString("fps: "+ ofToString(ofGetFrameRate()), 20, ofGetHeight()-40);
     
 	ofNoFill();
 }
@@ -854,7 +856,7 @@ void HandJesture::drawShapes(int hand)
 		
 		//write number of the square on the screen (just for testing but what do you think?)
 		ofSetColor(0, 0, 0);
-		msgFont.drawString("" + ofToString(i, 0),Shape::board[i]->getLocation_x(),Shape::board[i]->getLocation_y());
+		//msgFont.drawString("" + ofToString(i, 0),Shape::board[i]->getLocation_x(),Shape::board[i]->getLocation_y());
 	}
 }
 //-------------------------------------------------------------
