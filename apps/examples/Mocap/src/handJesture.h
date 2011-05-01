@@ -40,6 +40,7 @@ public:
     void checkSpeedMove(float x, float y);
     void drawPointCloud();
 	void drawHands();
+    void updateShapeColors();
 	void drawHandCircle();
     void drawShapes(int hand);
 	void drawBackground();
@@ -49,7 +50,7 @@ public:
 	void initShapeBoard();
     
     void printHandTrail();
-	
+	void setTheme(int theme);
 	//static Shape* board[10];
     
 	// Kinect
@@ -64,7 +65,7 @@ public:
 	ofxCvGrayscaleImage		grayThreshPrev;
 	
 	ofxCvContourFinder 	contourFinder;
-	
+	struct themes;
     //debug values etc
 	bool				debug;
 	bool				showConfigUI;

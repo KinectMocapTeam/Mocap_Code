@@ -14,7 +14,7 @@ const float RWALL = 1024.0f;
 const float LWALL = 0.0f;
 const float TWALL = 0.0f;
 const float BWALL = 768.0f;
-
+//ofColor colors[10];
 float RGB[] = {0.0f,128.0f,255.0f};//limit color options
 
 //to inhance reaction of the hoverOver effect (never set below 1)
@@ -198,7 +198,9 @@ void Shape::collision_AntiMagnet(float x, float y){
 	incVelocity(velx, vely);
 	
 	//printf("incremented by (%f, %f)  velocity --(%f, %f)\n",velx,vely,velocity_x,velocity_y);
-}/*
+}
+
+/*
   * if hit_count is enough it explodes it and generates a new shape
   *
   */
@@ -212,10 +214,11 @@ void Shape::checkDamage()
 		location_y = ofRandom(TWALL, BWALL-200);
 		location_x = ofRandom(LWALL, RWALL-200);
 	}
-	shape_color.red = RGB[int(ofRandom(0, 2))];
+        //removing code to randomly set colors
+	/*shape_color.red = RGB[int(ofRandom(0, 2))];
 	shape_color.blue = RGB[int(ofRandom(0, 2))];
 	shape_color.green = RGB[int(ofRandom(0, 2))];
-	if((shape_color.red ==0)&&(shape_color.blue==0)&&(shape_color.green==0))
+	if((shape_color.red ==255)&&(shape_color.blue==255)&&(shape_color.green==255))
 	{
 		int c = ofRandom(1, 3);
 		switch(c){
@@ -230,7 +233,7 @@ void Shape::checkDamage()
 				break;
 		
 		}
-	}
+	}*/
 	}	
 }
 /*

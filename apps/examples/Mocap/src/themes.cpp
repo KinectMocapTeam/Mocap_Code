@@ -6,4 +6,11 @@
 //  Copyright 2011 NYU. All rights reserved.
 //
 
-#include "theme.h"
+#include "themes.h"
+//
+/*
+ *constructors
+ */
+//Themes::Themes(){}
+
+// public struct for all the theme variables

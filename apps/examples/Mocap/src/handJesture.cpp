@@ -10,9 +10,17 @@
 
 //array that stores the shapes on the board
 Shape* Shape::board[10];
+// Struct that stores arrays of Colors and Sounds
+ofColor colors[10];
+ofSoundPlayer sounds[10];
 
 //An array of the last hand positions
+int GENERIC = 0;
+int BUSINESS = 1;
+int RETRO =2;
+int max_number_themes = 2;
 int HAND_TRAIL_SIZE = 20;
+int current_theme=0;
 ofPoint hand_trail_one[20];
 ofPoint hand_trail_two[20];
 int trail_one;
@@ -50,12 +58,15 @@ const int SHAPE_SIZE_MIN = 50;
 void HandJesture::initShapeBoard(){
 	for(int i = 0; i<10 ; i++){
 		
+        //random value for the theme 
+        int color_value = ofRandom(1, 5);
         /*Edit the shape sizes to user ofrandom instead of rand... wasn't working*/
 		Shape::board[i] = new Shape(
 									float(ofRandom(0.0f,screen_width-SHAPE_SIZE_MAX)),float(ofRandom(0.0f,screen_height-SHAPE_SIZE_MAX)),		//random location 
                                     float(ofRandom(SHAPE_SIZE_MIN, SHAPE_SIZE_MAX)),									//random width 
 							 float(ofRandom(SHAPE_SIZE_MIN, SHAPE_SIZE_MAX)),											//random height
-							 RGB2[rand()%3], RGB2[rand()%3], RGB2[rand()%3], float(ofRandom(0.0f, 255.0f)));				//random color
+                            
+							 colors[color_value].r, colors[color_value].g, colors[color_value].b, float(ofRandom(0.0f, 255.0f)));				//random color
 		printf("loc [%i] (%f ,%f)\n",i,Shape::board[i]->getLocation_x(),Shape::board[i]->getLocation_y());
 		while(Shape::board[i]->locationError(i,false)){
 			Shape::board[i]->setLocation(float(ofRandom(0.0f,screen_width-SHAPE_SIZE_MAX)), float(ofRandom(0.0f,screen_height-SHAPE_SIZE_MAX)));
@@ -63,7 +74,122 @@ void HandJesture::initShapeBoard(){
 		}
 	}
 }
+/*Update the color of all the shapes on the board (ro reflect the new theme)*/
+void HandJesture::updateShapeColors()
+{
+    for(int i = 0; i<10 ; i++){
+        int color_value = ofRandom(1, 6);
+        Shape::board[i]->setColor(colors[color_value].r, colors[color_value].g, colors[color_value].b, 1);
+    }
+}
+/*Allocates sounds and colors based on selected theme*/
+void HandJesture::setTheme(int theme)
+{
+    if(theme==GENERIC)
+    {
+        printf("Setting a Generic Theme");
+        //background color -black
+        colors[0].r=0;
+        colors[0].g=0;
+        colors[0].b=0;
+        
+        //shape colors
+            //purple #90F
+            colors[1].r=153;
+            colors[1].g=0;
+            colors[1].b=255;
+            
+            //lime green #CF0
+            colors[2].r=204;
+            colors[2].g=255;
+            colors[2].b=0;
+            
+            //pink #F0C
+            colors[3].r=255;
+            colors[3].g=0;
+            colors[3].b=204;
+            
+            //red #ff0037
+            colors[4].r=255;
+            colors[4].g=0;
+            colors[4].b=55;
 
+            
+            //blue-purple #8813FF
+            colors[5].r=136;
+            colors[5].g=19;
+            colors[5].b=255;
+    }
+    else if(theme == BUSINESS)
+    {
+        printf("Changing Theme To: Business");
+        //background color -white
+        colors[0].r=255;
+        colors[0].g=255;
+        colors[0].b=255;
+        
+        //shape colors
+            //purple #cb99ff
+            colors[1].r=203;
+            colors[1].g=153;
+            colors[1].b=255;
+            
+            //peach #FFE791
+            colors[2].r=255;
+            colors[2].g=231;
+            colors[2].b=145;
+            
+            //pink #FF91F1
+            colors[3].r=255;
+            colors[3].g=145;
+            colors[3].b=241;
+            
+            //green #E9FF91
+            colors[4].r=233;
+            colors[4].g=255;
+            colors[4].b=145;
+            
+            
+            //blue #AB9FFF
+            colors[5].r=171;
+            colors[5].g=159;
+            colors[5].b=255;
+    }
+    else if(theme == RETRO)
+    {
+        printf("Changing Theme To: RETRO");
+        //background color -black
+        colors[0].r=0;
+        colors[0].g=0;
+        colors[0].b=0;
+        
+        //shape colors
+            //Green #00ff00
+            colors[1].r=0;
+            colors[1].g=255;
+            colors[1].b=0;
+            
+            //Orange #FF7400
+            colors[2].r=255;
+            colors[2].g=116;
+            colors[2].b=0;
+            
+            //Cyan #00ffff
+            colors[3].r=0;
+            colors[3].g=255;
+            colors[3].b=255;
+            
+            //yellow #f8ff00
+            colors[4].r=248;
+            colors[4].g=255;
+            colors[4].b=0;
+            
+            //pink #FF00FF
+            colors[5].r=255;
+            colors[5].g=0;
+            colors[5].b=255;
+        }
+}
 void HandJesture::setup() {
     trail_one = 0;
     trail_two = 0;
@@ -76,7 +202,7 @@ void HandJesture::setup() {
 	ofLog(OF_LOG_VERBOSE, "Start setup()");
     jestureFiredCount = 0;
 	toNormalModeCount = 0;
-	
+	setTheme(current_theme);
     debug = false;
 	showConfigUI = true;
 	mirror = true;
@@ -466,8 +592,10 @@ void HandJesture::draw() {
 	else {
         //set the background full screen
        // ofSetFullscreen(true);
+        
+        
         //draw a white background
-        ofBackground(255,255,255);	
+        ofBackground(colors[0].r,colors[0].g,colors[0].b);	
     
 		//msgFont.drawString("Press Space Key to start.", 20, ofGetHeight()-60);
 		
@@ -496,7 +624,7 @@ void HandJesture::draw() {
 				centroidY += contourFinder.blobs[i].pts[j].y;
                 
                 //check the speed of the hand movement
-                HandJesture::checkSpeedMove(centroidX, centroidY);
+               // HandJesture::checkSpeedMove(centroidX, centroidY);
 			}
             /*These are the values */
 			centroidX = centroidX/addCount;
@@ -644,8 +772,7 @@ void HandJesture::keyPressed (int key)
 			farThreshold --;
 			if (farThreshold < 0) farThreshold = 0;
 			break;
-			
-		case '+':
+		//case '+':
 		case '=':
 			nearThreshold ++;
 			if (nearThreshold > 255) nearThreshold = 255;
@@ -663,6 +790,18 @@ void HandJesture::keyPressed (int key)
 			kinect.close();
 			kinect.open();
 			kinect.setCameraTiltAngle(angle);
+            break;
+        case 't':
+            //changes the theme
+            current_theme++;
+            if(current_theme > max_number_themes) //if current_theme has reached the max # of themes-reset
+            {
+                current_theme = 0;
+            }
+            //set the new theme
+            setTheme(current_theme);
+            //update the shape colors
+            updateShapeColors();
             break;
 		case ' ':
 			showConfigUI = !showConfigUI;
@@ -783,6 +922,7 @@ void HandJesture::checkClick(int cornerCount,int hand) {
 /*Check The Speed of the hand movement
  And set the speed of the background beats*/
 void HandJesture::checkSpeedMove(float x, float y) {
+    // removing code to update the speed of the beats
     float slowest_beat_speed = .75;
     float fastest_beat_speed = 1.25;
     float widthStep = ofGetWidth() / 3.0f;
@@ -798,7 +938,7 @@ void HandJesture::checkSpeedMove(float x, float y) {
             speed = fastest_beat_speed;
         }
 
-		background_sound.setSpeed(speed);
+		background_sound.setSpeed(speed);*/
         //printf("setting Background Beat Speed: %f \n",speed);
 	} 
 

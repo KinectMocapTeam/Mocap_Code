@@ -38,7 +38,8 @@ public:
 	float getGreen();
 	float getBlue();
 	float getAlpha();
-	
+	//ofColor colors[10];
+    
 	void move();
 	void slow();
 	bool hoveredOver(float x, float y);
