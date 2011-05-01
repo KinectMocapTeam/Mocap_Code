@@ -7,6 +7,7 @@
  *
  */
 #include "ofMath.h"
+#include "ofMain.h"
 
 class Shape{
 
@@ -14,14 +15,15 @@ public:
 	
 	//the board of 10 shapes
 	static Shape* board[10];
+    //the sounds
+    ofSoundPlayer shape_sounds[10];
 	struct SHADOW{
 		float x;
 		float y;
 		float alpha;
 		float size;
 	};
-	
-	//array of shards of the shape
+    //array of shards of the shape
 	struct SHADOW* bubbles[10];
 	struct SHADOW* trail[10];
 	
@@ -68,6 +70,7 @@ public:
 	float getVelocity_x();
 	void setColor(float R, float G, float B, float A);
 	void setLocation(float x, float y);
+    void setSounds(ofSoundPlayer new_sounds[10]);
 	
 	//--- possibly deletable methods ---
 	void grabShape(int hand);

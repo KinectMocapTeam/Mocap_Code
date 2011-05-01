@@ -14,7 +14,11 @@ const float RWALL = 1024.0f;
 const float LWALL = 0.0f;
 const float TWALL = 0.0f;
 const float BWALL = 768.0f;
-//ofColor colors[10];
+
+ofSoundPlayer shape_sounds[10];
+int COLLISION_SOUND =2;
+int EXPLOSION_SOUND =1;
+
 float RGB[] = {0.0f,128.0f,255.0f};//limit color options
 
 //to inhance reaction of the hoverOver effect (never set below 1)
@@ -45,6 +49,16 @@ Shape::Shape(float init_location_x,float init_location_y, float init_height, flo
 	for(int i = 0; i<10; i++){
 		trail[i] = new SHADOW;
 	}
+}
+/*
+ * Set the shape sounds //changes with theme
+ */
+void Shape::setSounds(ofSoundPlayer new_sounds[10])
+{
+    for(int i =0; i<10; i++)
+    {
+        Shape::shape_sounds[i]=new_sounds[i];
+    }
 }
 /*
  * changes location of the shape based on its velocity and checks to see if it has hit a wall (in which case it bounces)
@@ -149,8 +163,19 @@ void Shape::checkCollision(int index)
 		
 		// check for shapes overlapping 
 		if(insideBounds(shapeL, shapeR, shapeT, shapeB)){
+            //if the collision is already playing - stop it
+            if(shape_sounds[COLLISION_SOUND].getIsPlaying())
+            {
+                //stop the sound
+                shape_sounds[COLLISION_SOUND].stop();
+                printf("Stopping the sound\n");
+            }
 			hit_count++;
 			Shape::board[i]->hit_count++;
+            //play a collision sound
+            printf("COLLISION!\n");
+            //shape_sounds[COLLISION_SOUND].play();
+            printf("Play Collision! \n");
 			collision_Bounce(i);
 			/***** this is where we can put switch collisions *****/
 		}
@@ -256,12 +281,23 @@ void Shape::doneExploding()
 void Shape::createExplosion()
 {	
 	exploding = true;
+    //printf("Explosion");
+   // if (shape_sounds[EXPLOSION_SOUND].getIsPlaying())
+    //{
+        //if the sound is still playing
+        //stop it 
+      //  shape_sounds[EXPLOSION_SOUND].stop();
+        
+    //}
+    //shape_sounds[EXPLOSION_SOUND].play();
 	for(int i = 0; i<10 ;i++){
+        
 		bubbles[i] = new SHADOW;
 		bubbles[i]->x = ofRandom(getLocation_x(), getLocation_x()+getWidth());
 		bubbles[i]->y = ofRandom(getLocation_y(), getLocation_y()+getHeight());
 		bubbles[i]->size = ofRandom(10, 50);
 		bubbles[i]->alpha = ofRandom(200, 255);
+        
 	}
 }
 /*

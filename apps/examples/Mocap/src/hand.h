@@ -69,7 +69,7 @@ private:
 	bool					isSuspendEvent;
 	
 	// sounds
-	ofSoundPlayer		soundClick;
+	//ofSoundPlayer		soundClick;
 	
 	bool isActive;
 	

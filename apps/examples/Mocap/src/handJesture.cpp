@@ -13,7 +13,7 @@ Shape* Shape::board[10];
 // Struct that stores arrays of Colors and Sounds
 ofColor colors[10];
 ofSoundPlayer sounds[10];
-
+ofSoundPlayer generic_sounds[10];
 //An array of the last hand positions
 int GENERIC = 0;
 int BUSINESS = 1;
@@ -56,6 +56,7 @@ const int SHAPE_SIZE_MIN = 50;
 
 
 void HandJesture::initShapeBoard(){
+    //set intial board sounds
 	for(int i = 0; i<10 ; i++){
 		
         //random value for the theme 
@@ -71,6 +72,8 @@ void HandJesture::initShapeBoard(){
 		while(Shape::board[i]->locationError(i,false)){
 			Shape::board[i]->setLocation(float(ofRandom(0.0f,screen_width-SHAPE_SIZE_MAX)), float(ofRandom(0.0f,screen_height-SHAPE_SIZE_MAX)));
 			printf("error [%i] new loc (%f ,%f)\n",i,Shape::board[i]->getLocation_x(),Shape::board[i]->getLocation_y());
+            
+            
 		}
 	}
 }
@@ -80,14 +83,41 @@ void HandJesture::updateShapeColors()
     for(int i = 0; i<10 ; i++){
         int color_value = ofRandom(1, 6);
         Shape::board[i]->setColor(colors[color_value].r, colors[color_value].g, colors[color_value].b, 1);
+        
+        //update sounds
+        //Shape::board[i]->setSounds(sounds);
     }
+}
+/*Load sounds for each theme*/
+void HandJesture::loadSounds()
+{
+    /* 
+        GENERIC
+     */
+    // background sounds
+    generic_sounds[0].loadSound("sound/Generic/background.mp3");
+    generic_sounds[0].setVolume(0.25f);
+    generic_sounds[0].setMultiPlay(true);
+    generic_sounds[0].setLoop(true);
+    
+    //explosion sounds
+    generic_sounds[1].loadSound("sound/Generic/explosion.mp3");
+    generic_sounds[1].setVolume(0.50f);
+    generic_sounds[1].setMultiPlay(true);
+    generic_sounds[1].setLoop(false);
+    
+    //collision sounds
+    generic_sounds[2].loadSound("sound/Generic/collision.mp3");
+    generic_sounds[2].setVolume(0.50f);
+    generic_sounds[2].setMultiPlay(true);
+    generic_sounds[2].setLoop(false);
 }
 /*Allocates sounds and colors based on selected theme*/
 void HandJesture::setTheme(int theme)
 {
     if(theme==GENERIC)
     {
-        printf("Setting a Generic Theme");
+        printf("Setting a Generic Theme \n");
         //background color -black
         colors[0].r=0;
         colors[0].g=0;
@@ -119,10 +149,25 @@ void HandJesture::setTheme(int theme)
             colors[5].r=136;
             colors[5].g=19;
             colors[5].b=255;
+        
+        //sounds
+            //background sound
+        //intialize the background board sound
+        sounds[0]=generic_sounds[0];
+        sounds[1]=generic_sounds[1];
+        sounds[2]=generic_sounds[2];
+        sounds[0].play();
+       /* sounds[0].loadSound("sound/Generic/Sandstorm.mp3");
+        sounds[0].setVolume(0.00f);
+        sounds[0].setMultiPlay(true);
+        sounds[0].setLoop(true);
+        sounds[0].play();*/
+            //shape sounds
+
     }
     else if(theme == BUSINESS)
     {
-        printf("Changing Theme To: Business");
+        printf("Changing Theme To: Business \n");
         //background color -white
         colors[0].r=255;
         colors[0].g=255;
@@ -157,7 +202,7 @@ void HandJesture::setTheme(int theme)
     }
     else if(theme == RETRO)
     {
-        printf("Changing Theme To: RETRO");
+        printf("Changing Theme To: RETRO \n");
         //background color -black
         colors[0].r=0;
         colors[0].g=0;
@@ -190,6 +235,7 @@ void HandJesture::setTheme(int theme)
             colors[5].b=255;
         }
 }
+
 void HandJesture::setup() {
     trail_one = 0;
     trail_two = 0;
@@ -197,7 +243,7 @@ void HandJesture::setup() {
     intial_trail_two = 0;
     //soundClick.loadSound("sound/4beat.mp3");
     //soundClick.setVolume(100);
-    
+    loadSounds();
 	ofSetLogLevel(0);
 	ofLog(OF_LOG_VERBOSE, "Start setup()");
     jestureFiredCount = 0;
@@ -207,12 +253,6 @@ void HandJesture::setup() {
 	showConfigUI = true;
 	mirror = true;
     showUserFeedback=true;
-    
-    //intialize the background board sound
-    HandJesture::background_sound.loadSound("sound/beat.wav");
-    HandJesture::background_sound.setVolume(0.75f);
-	HandJesture::background_sound.setMultiPlay(true);
-    HandJesture::background_sound.setLoop(true);
     	
 	// Setup Kinect
 	angle = 5;
@@ -360,13 +400,13 @@ void HandJesture::update() {
 			for (int j = 0; j < hands.size(); j++) {
 				hands[j]->unRegister();
 			}
-			soundRelease.play();
+			//soundRelease.play();
 		}
 	} else {
 		if (detectCount > 30) {
 			detectingHands = true;
 			sendEvent("Register", "\"mode\":\"single\"");
-			soundDetect.play();
+			//soundDetect.play();
 		}
 	}
     
@@ -554,12 +594,12 @@ void HandJesture::resetHandTrail()
 void HandJesture::draw() {
     	ofSetColor(255, 255, 255);
 	
-	if (showConfigUI ==true ) {
+	if (showConfigUI==true ) {
         //draw a black background for the gui
         ofBackground(0,0,0);	
 		kinect.drawDepth(400, 0, 400, 300);
 		gui.draw();
-		
+		sounds[0].setVolume(0.00f);
 		msgFont.drawString("Press Space Key to start.", 20, ofGetHeight()-60);
 		
 		ofPushMatrix();
@@ -592,14 +632,14 @@ void HandJesture::draw() {
 	else {
         //set the background full screen
        // ofSetFullscreen(true);
-        
-        
-        //draw a white background
-        ofBackground(colors[0].r,colors[0].g,colors[0].b);	
     
+        //draw a theme background
+        ofBackground(colors[0].r,colors[0].g,colors[0].b);	
+        sounds[0].setVolume(0.25f);
+
 		//msgFont.drawString("Press Space Key to start.", 20, ofGetHeight()-60);
 		
-		ofPushMatrix();
+		ofPushMatrix();//play the backgorund sound
 		//ofTranslate(400, 300, 0);
 		glScalef(1, 1, 1.0f); 
 
@@ -819,7 +859,7 @@ void HandJesture::keyPressed (int key)
 				kinect.setCameraTiltAngle(angle);
                 
                 //set the background sound to play
-                HandJesture::background_sound.play();
+               // HandJesture::background_sound.play();
 			}
 			break;
         //show the corner user feedback screen
@@ -938,7 +978,7 @@ void HandJesture::checkSpeedMove(float x, float y) {
             speed = fastest_beat_speed;
         }
 
-		background_sound.setSpeed(speed);*/
+		background_sound.setSpeed(speed);
         //printf("setting Background Beat Speed: %f \n",speed);
 	} 
 

@@ -34,8 +34,8 @@ Hand::Hand(bool isPrimary, int dispWidth, int dispHeight) {
 	isSuspendEvent = false;
 	
 	
-	soundClick.loadSound("sound/16582__tedthetrumpet__kettleswitch1.aif");
-	soundClick.setVolume(100);
+	//soundClick.loadSound("sound/16582__tedthetrumpet__kettleswitch1.aif");
+	//soundClick.setVolume(100);
 
 }
 
@@ -176,12 +176,12 @@ bool Hand::checkClick(int cornerCount) {
 	if (cornerNums > currentCornerNums + 150) {
 		if (handMode == HAND_MODE_DRAG) {
 			fireMouseUp();
-			soundClick.play();
+			//soundClick.play();
 			handMode = HAND_MODE_NORMAL;
 			return true;
 		} else if (handMode == HAND_MODE_CLICK) {
 			fireMouseClick();
-			soundClick.play();
+			//soundClick.play();
 			handMode = HAND_MODE_NORMAL;
 			return true;
 		}
@@ -191,7 +191,7 @@ bool Hand::checkClick(int cornerCount) {
 		if (mouseDownCount > MOUSE_CLICK_FRAME) {
 			handMode = HAND_MODE_DRAG;
 			fireMouseDown();
-			soundClick.play();
+			//soundClick.play();
 			mouseDownCount = 0;
 		}
 	}

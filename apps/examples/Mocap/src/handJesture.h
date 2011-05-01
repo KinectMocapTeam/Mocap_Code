@@ -22,11 +22,13 @@ class HandJesture : public ofBaseApp
 	
 public:
 	
+    
 	void setup();
 	void update();
 	void draw();
 	void exit();
 	
+    
 	void keyPressed  (int key);
 	void mouseMoved(int x, int y );
 	void mouseDragged(int x, int y, int button);
@@ -34,6 +36,7 @@ public:
 	void mouseReleased(int x, int y, int button);
 	void windowResized(int w, int h);
     
+    void loadSounds();
 	void checkClick(int cornerCount,int hand);
     void storeHandTrail(int i, ofPoint hand_location);
     void resetHandTrail();
