@@ -87,7 +87,7 @@ void HandJesture::updateShapeColors()
         Shape::board[i]->setColor(colors[color_value].r, colors[color_value].g, colors[color_value].b, 1);
         
         //update sounds
-        //Shape::board[i]->setSounds(sounds);
+        Shape::board[i]->setSounds(sounds);
     }
 }
 /*Load sounds for each theme*/
@@ -709,6 +709,7 @@ void HandJesture::draw() {
         //if showUserFeedback is on show the kinect input
         if(showUserFeedback)
         {
+            ofSetColor(55, 55 , 55);
             grayImage.draw(0, 0,screen_width, screen_height);
         }	
 
@@ -767,7 +768,7 @@ void HandJesture::draw() {
 			//store the current hand location values into an array
             storeHandTrail(i,hand_location);
             //print the resedual hand location values
-            printHandTrail();
+            //printHandTrail();
             
 			prev_x = centroidX;
 			prev_y = centroidY;

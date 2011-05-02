@@ -23,11 +23,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/shape.cpp"
-         timestampString = "325966987.114085"
+         timestampString = "325991984.042003"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "341"
-         endingLineNumber = "341"
+         startingLineNumber = "348"
+         endingLineNumber = "348"
          landmarkName = "Shape::locationError(int index, bool allow_one)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -37,11 +37,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/shape.cpp"
-         timestampString = "325966987.114085"
+         timestampString = "325991984.042003"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "344"
-         endingLineNumber = "344"
+         startingLineNumber = "351"
+         endingLineNumber = "351"
          landmarkName = "Shape::locationError(int index, bool allow_one)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -51,11 +51,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/handJesture.cpp"
-         timestampString = "325968234.453212"
+         timestampString = "325991177.551678"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "90"
-         endingLineNumber = "90"
+         startingLineNumber = "91"
+         endingLineNumber = "91"
          landmarkName = "HandJesture::updateShapeColors()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -65,12 +65,40 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "src/shape.cpp"
-         timestampString = "325966987.114085"
+         timestampString = "325991984.042003"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "61"
-         endingLineNumber = "61"
+         startingLineNumber = "67"
+         endingLineNumber = "67"
          landmarkName = "Shape::setSounds(ofSoundPlayer new_sounds[10])"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "src/shape.cpp"
+         timestampString = "325991984.042003"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "184"
+         endingLineNumber = "184"
+         landmarkName = "Shape::checkCollision(int index)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "src/shape.cpp"
+         timestampString = "325991984.042003"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "175"
+         endingLineNumber = "175"
+         landmarkName = "Shape::checkCollision(int index)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
