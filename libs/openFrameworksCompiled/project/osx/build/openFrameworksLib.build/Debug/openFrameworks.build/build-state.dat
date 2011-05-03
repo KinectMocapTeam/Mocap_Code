@@ -12,8 +12,8 @@ cCompileC build/openFrameworksLib.build/Debug/openFrameworks.build/Objects-norma
 cCompileC build/openFrameworksLib.build/Debug/openFrameworks.build/Objects-normal/i386/ofTexture.o /Users/paigeponzeka/Kinect/Mocap_Code/libs/openFrameworksCompiled/project/osx/../../../openFrameworks/graphics/ofTexture.cpp normal i386 c++ com.apple.compilers.llvmgcc42
 cCompileC build/openFrameworksLib.build/Debug/openFrameworks.build/Objects-normal/i386/ofTrueTypeFont.o /Users/paigeponzeka/Kinect/Mocap_Code/libs/openFrameworksCompiled/project/osx/../../../openFrameworks/graphics/ofTrueTypeFont.cpp normal i386 c++ com.apple.compilers.llvmgcc42
 cCompileC build/openFrameworksLib.build/Debug/openFrameworks.build/Objects-normal/i386/ofSoundPlayer.o /Users/paigeponzeka/Kinect/Mocap_Code/libs/openFrameworksCompiled/project/osx/../../../openFrameworks/sound/ofSoundPlayer.cpp normal i386 c++ com.apple.compilers.llvmgcc42
-cCompileC build/openFrameworksLib.build/Debug/openFrameworks.build/Objects-normal/i386/ofSoundStream.o /Users/paigeponzeka/Kinect/Mocap_Code/libs/openFrameworksCompiled/project/osx/../../../openFrameworks/sound/ofSoundStream.cpp normal i386 c++ com.apple.compilers.llvmgcc42
 cCompileC build/openFrameworksLib.build/Debug/openFrameworks.build/Objects-normal/i386/ofMath.o /Users/paigeponzeka/Kinect/Mocap_Code/libs/openFrameworksCompiled/project/osx/../../../openFrameworks/utils/ofMath.cpp normal i386 c++ com.apple.compilers.llvmgcc42
+cCompileC build/openFrameworksLib.build/Debug/openFrameworks.build/Objects-normal/i386/ofSoundStream.o /Users/paigeponzeka/Kinect/Mocap_Code/libs/openFrameworksCompiled/project/osx/../../../openFrameworks/sound/ofSoundStream.cpp normal i386 c++ com.apple.compilers.llvmgcc42
 cCompileC build/openFrameworksLib.build/Debug/openFrameworks.build/Objects-normal/i386/ofUtils.o /Users/paigeponzeka/Kinect/Mocap_Code/libs/openFrameworksCompiled/project/osx/../../../openFrameworks/utils/ofUtils.cpp normal i386 c++ com.apple.compilers.llvmgcc42
 cCompileC build/openFrameworksLib.build/Debug/openFrameworks.build/Objects-normal/i386/ofQtUtils.o /Users/paigeponzeka/Kinect/Mocap_Code/libs/openFrameworksCompiled/project/osx/../../../openFrameworks/video/ofQtUtils.cpp normal i386 c++ com.apple.compilers.llvmgcc42
 cCompileC build/openFrameworksLib.build/Debug/openFrameworks.build/Objects-normal/i386/ofVideoGrabber.o /Users/paigeponzeka/Kinect/Mocap_Code/libs/openFrameworksCompiled/project/osx/../../../openFrameworks/video/ofVideoGrabber.cpp normal i386 c++ com.apple.compilers.llvmgcc42
@@ -1336,7 +1336,7 @@ r0
 
 CCheck dependencies
 r0
-lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependenciesf99f443a426eb341^9982513a426eb341^---0#1#0#--18"Check dependencies
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies40859b9b9b6fb341^4e2aa69b9b6fb341^---0#1#0#--18"Check dependencies
 
 CCompileC build/openFrameworksLib.build/Debug/openFrameworks.build/Objects-normal/i386/ofAppGlutWindow.o /Users/paigeponzeka/Kinect/Mocap_Code/libs/openFrameworksCompiled/project/osx/../../../openFrameworks/app/ofAppGlutWindow.cpp normal i386 c++ com.apple.compilers.llvmgcc42
 s325986501.763414

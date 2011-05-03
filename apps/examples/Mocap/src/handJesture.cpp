@@ -13,22 +13,38 @@ Shape* Shape::board[10];
 // Struct that stores arrays of Colors and Sounds
 ofColor colors[10];
 ofSoundPlayer sounds[5];
+ofSoundPlayer twilight_sounds[5];
+ofSoundPlayer groovy_sounds[5];
+ofSoundPlayer asian_sounds[5];
+ofSoundPlayer chordal_sounds[5];
 ofSoundPlayer generic_sounds[5];
 ofSoundPlayer retro_sounds[5];
-ofSoundPlayer business_sounds[5];
+ofSoundPlayer jazz_sounds[5];
+ofSoundPlayer race_sounds[5];
+
 //An array of the last hand positions
-int GENERIC = 0;
-int BUSINESS = 1;
-int RETRO =2;
-int max_number_themes = 2;
-int HAND_TRAIL_SIZE = 20;
-int current_theme=0;
 ofPoint hand_trail_one[20];
 ofPoint hand_trail_two[20];
+int HAND_TRAIL_SIZE = 20;
 int trail_one;
 int trail_two;
 int intial_trail_one;
 int intial_trail_two;
+
+
+// Themes Values
+int TWILIGHT_THEME = 0;
+int GROOVY_THEME = 1;
+int ASIAN_THEME = 2;
+int JAZZ_THEME = 3;
+int CHORDAL_THEME = 4;
+int GENERIC_THEME = 5;
+int RETRO_THEME = 6;
+int RACE_THEME = 7;
+
+int max_number_themes = 7;
+int current_theme=0;
+
 
 
 //screen size
@@ -93,8 +109,114 @@ void HandJesture::updateShapeColors()
 /*Load sounds for each theme*/
 void HandJesture::loadSounds()
 {
+    
     /* 
-        GENERIC
+     Twilight
+     */
+    // background sounds
+    twilight_sounds[0].loadSound("sound/Twilight/background.mp3");
+    twilight_sounds[0].setVolume(0.25f);
+    twilight_sounds[0].setMultiPlay(true);
+    twilight_sounds[0].setLoop(true);
+    
+    //explosion sounds
+    twilight_sounds[1].loadSound("sound/Twilight/explosion.mp3");
+    twilight_sounds[1].setVolume(0.50f);
+    twilight_sounds[1].setMultiPlay(true);
+    twilight_sounds[1].setLoop(false);
+    
+    //collision sounds
+    twilight_sounds[2].loadSound("sound/Twilight/collision.mp3");
+    twilight_sounds[2].setVolume(0.50f);
+    twilight_sounds[2].setMultiPlay(true);
+    twilight_sounds[2].setLoop(false);
+       
+    /* 
+     Groovy
+     */
+    // background sounds
+    groovy_sounds[0].loadSound("sound/Groovy/background.mp3");
+    groovy_sounds[0].setVolume(0.50f);
+    groovy_sounds[0].setMultiPlay(true);
+    groovy_sounds[0].setLoop(true);
+    
+    //explosion sounds
+    groovy_sounds[1].loadSound("sound/Groovy/explosion.mp3");
+    groovy_sounds[1].setVolume(0.50f);
+    groovy_sounds[1].setMultiPlay(true);
+    groovy_sounds[1].setLoop(false);
+    
+    //collision sounds
+    groovy_sounds[2].loadSound("sound/Groovy/collision.mp3");
+    groovy_sounds[2].setVolume(0.50f);
+    groovy_sounds[2].setMultiPlay(true);
+    groovy_sounds[2].setLoop(false);
+    
+    /* 
+     Asian
+     */
+    // background sounds
+    asian_sounds[0].loadSound("sound/Asian/background.mp3");
+    asian_sounds[0].setVolume(0.50f);
+    asian_sounds[0].setMultiPlay(true);
+    asian_sounds[0].setLoop(true);
+    
+    //explosion sounds
+    asian_sounds[1].loadSound("sound/Asian/explosion.mp3");
+    asian_sounds[1].setVolume(0.50f);
+    asian_sounds[1].setMultiPlay(true);
+    asian_sounds[1].setLoop(false);
+    
+    //collision sounds
+    asian_sounds[2].loadSound("sound/Asian/collision.mp3");
+    asian_sounds[2].setVolume(0.50f);
+    asian_sounds[2].setMultiPlay(true);
+    asian_sounds[2].setLoop(false);
+    
+    /* 
+     Jazz
+     */
+    // background sounds
+    jazz_sounds[0].loadSound("sound/Jazz/background.mp3");
+    jazz_sounds[0].setVolume(0.25f);
+    jazz_sounds[0].setMultiPlay(true);
+    jazz_sounds[0].setLoop(true);
+    
+    //explosion sounds
+    jazz_sounds[1].loadSound("sound/Jazz/explosion.mp3");
+    jazz_sounds[1].setVolume(0.50f);
+    jazz_sounds[1].setMultiPlay(true);
+    jazz_sounds[1].setLoop(false);
+    
+    //collision sounds
+    jazz_sounds[2].loadSound("sound/Jazz/collision.mp3");
+    jazz_sounds[2].setVolume(0.50f);
+    jazz_sounds[2].setMultiPlay(true);
+    jazz_sounds[2].setLoop(false);
+    
+    /* 
+     Chordal
+     */
+    // background sounds
+    chordal_sounds[0].loadSound("sound/Chordal/background.mp3");
+    chordal_sounds[0].setVolume(0.25f);
+    chordal_sounds[0].setMultiPlay(true);
+    chordal_sounds[0].setLoop(true);
+    
+    //explosion sounds
+    chordal_sounds[1].loadSound("sound/Chodral/explosion.mp3");
+    chordal_sounds[1].setVolume(0.50f);
+    chordal_sounds[1].setMultiPlay(true);
+    chordal_sounds[1].setLoop(false);
+    
+    //collision sounds
+    chordal_sounds[2].loadSound("sound/Chodral/collision.mp3");
+    chordal_sounds[2].setVolume(0.50f);
+    chordal_sounds[2].setMultiPlay(true);
+    chordal_sounds[2].setLoop(false);
+    
+    /* 
+     Generic
      */
     // background sounds
     generic_sounds[0].loadSound("sound/Generic/background.mp3");
@@ -113,29 +235,7 @@ void HandJesture::loadSounds()
     generic_sounds[2].setVolume(0.50f);
     generic_sounds[2].setMultiPlay(true);
     generic_sounds[2].setLoop(false);
-    
-    /* 
-     Business
-     */
-    // background sounds
-    business_sounds[0].loadSound("sound/Business/background.mp3");
-    business_sounds[0].setVolume(0.25f);
-    business_sounds[0].setMultiPlay(true);
-    business_sounds[0].setLoop(true);
-    
-    //explosion sounds
-    business_sounds[1].loadSound("sound/Business/explosion.mp3");
-    business_sounds[1].setVolume(0.50f);
-    business_sounds[1].setMultiPlay(true);
-    business_sounds[1].setLoop(false);
-    
-    //collision sounds
-    business_sounds[2].loadSound("sound/Business/collision.mp3");
-    business_sounds[2].setVolume(0.50f);
-    business_sounds[2].setMultiPlay(true);
-    business_sounds[2].setLoop(false);
 
-    
     /* 
      Retro
      */
@@ -156,18 +256,244 @@ void HandJesture::loadSounds()
     retro_sounds[2].setVolume(0.50f);
     retro_sounds[2].setMultiPlay(true);
     retro_sounds[2].setLoop(false);
+    
+    /* 
+     Race
+     */
+    // background sounds
+    race_sounds[0].loadSound("sound/Race/background.mp3");
+    race_sounds[0].setVolume(0.25f);
+    race_sounds[0].setMultiPlay(true);
+    race_sounds[0].setLoop(true);
+    
+    //explosion sounds
+    race_sounds[1].loadSound("sound/Race/explosion.mp3");
+    race_sounds[1].setVolume(0.50f);
+    race_sounds[1].setMultiPlay(true);
+    race_sounds[1].setLoop(false);
+    
+    //collision sounds
+    race_sounds[2].loadSound("sound/Race/collision.mp3");
+    race_sounds[2].setVolume(0.50f);
+    race_sounds[2].setMultiPlay(true);
+    race_sounds[2].setLoop(false);
 
 }
 /*Allocates sounds and colors based on selected theme*/
 void HandJesture::setTheme(int theme)
 {
-    
+     // if the background sound is already playing stop it
     if(sounds[0].getIsPlaying())
     {
         printf("TURNING OFF BACKGROUND SOUND \n");
         sounds[0].stop();
     }
-    if(theme==GENERIC)
+    if(theme==TWILIGHT_THEME)
+    {
+        printf("Setting Theme: Twilight \n");
+        //background color -black
+        colors[0].r=0;
+        colors[0].g=0;
+        colors[0].b=0;
+        
+        //shape colors
+        // Yellow #ffcc33
+        colors[1].r=255;
+        colors[1].g=204;
+        colors[1].b=51;
+        
+        // Blue #6699ff
+        colors[2].r=102;
+        colors[2].g=153;
+        colors[2].b=255;
+        
+        // Purple #652ead
+        colors[3].r=101;
+        colors[3].g=46;
+        colors[3].b=173;
+        
+        // Lt.Blue #296FA4
+        colors[4].r=41;
+        colors[4].g=111;
+        colors[4].b=164;
+        
+        
+        // Lt.Yellow #FFE38F
+        colors[5].r=255;
+        colors[5].g=227;
+        colors[5].b=143;
+        
+        // sounds
+        // intialize the background board sound
+        sounds[0]=twilight_sounds[0];
+        sounds[1]=twilight_sounds[1];
+        sounds[2]=twilight_sounds[2];
+               
+    }
+    else if(theme==GROOVY_THEME)
+    {
+        printf("Setting Theme: Groovy \n");
+        // background color -black
+        colors[0].r=0;
+        colors[0].g=0;
+        colors[0].b=0;
+        
+        // shape colors
+        // Yellow #ffff00
+        colors[1].r=255;
+        colors[1].g=255;
+        colors[1].b=0;
+        
+        // Green #9FEE00
+        colors[2].r=159;
+        colors[2].g=238;
+        colors[2].b=0;
+        
+        // Blue #0099FF
+        colors[3].r=0;
+        colors[3].g=153;
+        colors[3].b=255;
+        
+        // Purple #7109AA
+        colors[4].r=113;
+        colors[4].g=9;
+        colors[4].b=170;
+        
+        
+        // Pink #CD0074
+        colors[5].r=205;
+        colors[5].g=0;
+        colors[5].b=116;
+        
+        // sounds
+        // intialize the background board sound
+        sounds[0]=groovy_sounds[0];
+        sounds[1]=groovy_sounds[1];
+        sounds[2]=groovy_sounds[2];
+    }
+    else if(theme==ASIAN_THEME)
+    {
+        printf("Setting Theme: ASIAN \n");
+        // background color -black
+        colors[0].r=0;
+        colors[0].g=0;
+        colors[0].b=0;
+        
+        // shape colors
+        // Yellow #FFAA11
+        colors[1].r=255;
+        colors[1].g=170;
+        colors[1].b=17;
+        
+        // Red #CC3322
+        colors[2].r=204;
+        colors[2].g=51;
+        colors[2].b=34;
+        
+        // Deep Red #A61B1A
+        colors[3].r=166;
+        colors[3].g=27;
+        colors[3].b=26;
+        
+        // brown #A6591A
+        colors[4].r=166;
+        colors[4].g=89;
+        colors[4].b=26;
+        
+        
+        // Gold #FFD700
+        colors[5].r=255;
+        colors[5].g=215;
+        colors[5].b=0;
+        
+        // sounds
+        // intialize the background board sound
+        sounds[0]=asian_sounds[0];
+        sounds[1]=asian_sounds[1];
+        sounds[2]=asian_sounds[2];
+    }
+    else if(theme == JAZZ_THEME)
+    {
+        printf("Changing Theme To: Business \n");
+        // background color -white
+        colors[0].r=255;
+        colors[0].g=255;
+        colors[0].b=255;
+        
+        // shape colors
+        // purple #cb99ff
+        colors[1].r=203;
+        colors[1].g=153;
+        colors[1].b=255;
+        
+        // peach #FFE791
+        colors[2].r=255;
+        colors[2].g=231;
+        colors[2].b=145;
+        
+        // pink #FF91F1
+        colors[3].r=255;
+        colors[3].g=145;
+        colors[3].b=241;
+        
+        // green #E9FF91
+        colors[4].r=233;
+        colors[4].g=255;
+        colors[4].b=145;
+        
+        
+        // blue #AB9FFF
+        colors[5].r=171;
+        colors[5].g=159;
+        colors[5].b=255;
+        
+        // set the default sounds to busneiss sounds
+        sounds[0]=jazz_sounds[0];
+        sounds[1]=jazz_sounds[1];
+        sounds[2]=jazz_sounds[2];
+    }
+
+    else if(theme == CHORDAL_THEME)
+    {
+        printf("Changing Theme To: CHORDAL\n");
+        //background color -black
+        colors[0].r=0;
+        colors[0].g=0;
+        colors[0].b=0;
+        
+        // shape colors
+        // Pink #D2315D
+        colors[1].r=210;
+        colors[1].g=49;
+        colors[1].b=93;
+        
+        // Yellow #F7C808
+        colors[2].r=247;
+        colors[2].g=200;
+        colors[2].b=8;
+        
+        // Aqua #22B5Bf
+        colors[3].r=34;
+        colors[3].g=181;
+        colors[3].b=191;
+        
+        // Orange #E98813
+        colors[4].r=233;
+        colors[4].g=136;
+        colors[4].b=19;
+        
+        // Green #88c134
+        colors[5].r=136;
+        colors[5].g=193;
+        colors[5].b=52;
+        
+        // set the default sounds to chordal sounds
+        sounds[0]=chordal_sounds[0];
+        sounds[1]=chordal_sounds[1];
+        sounds[2]=chordal_sounds[2];
+        
+    }
+    else if(theme==GENERIC_THEME)
     {
         printf("Setting a Generic Theme \n");
         //background color -black
@@ -176,87 +502,40 @@ void HandJesture::setTheme(int theme)
         colors[0].b=0;
         
         //shape colors
-            //purple #90F
-            colors[1].r=153;
-            colors[1].g=0;
-            colors[1].b=255;
-            
-            //lime green #CF0
-            colors[2].r=204;
-            colors[2].g=255;
-            colors[2].b=0;
-            
-            //pink #F0C
-            colors[3].r=255;
-            colors[3].g=0;
-            colors[3].b=204;
-            
-            //red #ff0037
-            colors[4].r=255;
-            colors[4].g=0;
-            colors[4].b=55;
-
-            
-            //blue-purple #8813FF
-            colors[5].r=136;
-            colors[5].g=19;
-            colors[5].b=255;
+        //purple #90F
+        colors[1].r=153;
+        colors[1].g=0;
+        colors[1].b=255;
         
-        //sounds
-            //background sound
-        //intialize the background board sound
+        //lime green #CF0
+        colors[2].r=204;
+        colors[2].g=255;
+        colors[2].b=0;
+        
+        //pink #F0C
+        colors[3].r=255;
+        colors[3].g=0;
+        colors[3].b=204;
+        
+        //red #ff0037
+        colors[4].r=255;
+        colors[4].g=0;
+        colors[4].b=55;
+        
+        
+        //blue-purple #8813FF
+        colors[5].r=136;
+        colors[5].g=19;
+        colors[5].b=255;
+        
+        // sounds
+        // intialize the background board sound
         sounds[0]=generic_sounds[0];
         sounds[1]=generic_sounds[1];
         sounds[2]=generic_sounds[2];
-       /* sounds[0].loadSound("sound/Generic/Sandstorm.mp3");
-        sounds[0].setVolume(0.00f);
-        sounds[0].setMultiPlay(true);
-        sounds[0].setLoop(true);
-        sounds[0].play();*/
-            //shape sounds
+    }
 
-    }
-    else if(theme == BUSINESS)
-    {
-        printf("Changing Theme To: Business \n");
-        //background color -white
-        colors[0].r=255;
-        colors[0].g=255;
-        colors[0].b=255;
-        
-        //shape colors
-            //purple #cb99ff
-            colors[1].r=203;
-            colors[1].g=153;
-            colors[1].b=255;
-            
-            //peach #FFE791
-            colors[2].r=255;
-            colors[2].g=231;
-            colors[2].b=145;
-            
-            //pink #FF91F1
-            colors[3].r=255;
-            colors[3].g=145;
-            colors[3].b=241;
-            
-            //green #E9FF91
-            colors[4].r=233;
-            colors[4].g=255;
-            colors[4].b=145;
-            
-            
-            //blue #AB9FFF
-            colors[5].r=171;
-            colors[5].g=159;
-            colors[5].b=255;
-        
-        //set the default sounds to busneiss sounds
-        sounds[0]=business_sounds[0];
-        sounds[1]=business_sounds[1];
-        sounds[2]=business_sounds[2];
-    }
-    else if(theme == RETRO)
+    else if(theme == RETRO_THEME)
     {
         printf("Changing Theme To: RETRO \n");
         //background color -black
@@ -265,43 +544,82 @@ void HandJesture::setTheme(int theme)
         colors[0].b=0;
         
         //shape colors
-            //Green #00ff00
-            colors[1].r=0;
-            colors[1].g=255;
-            colors[1].b=0;
-            
-            //Orange #FF7400
-            colors[2].r=255;
-            colors[2].g=116;
-            colors[2].b=0;
-            
-            //Cyan #00ffff
-            colors[3].r=0;
-            colors[3].g=255;
-            colors[3].b=255;
-            
-            //yellow #f8ff00
-            colors[4].r=248;
-            colors[4].g=255;
-            colors[4].b=0;
-            
-            //pink #FF00FF
-            colors[5].r=255;
-            colors[5].g=0;
-            colors[5].b=255;
+        //Green #00ff00
+        colors[1].r=0;
+        colors[1].g=255;
+        colors[1].b=0;
         
-        //set the default sounds to retro sounds
+        //Orange #FF7400
+        colors[2].r=255;
+        colors[2].g=116;
+        colors[2].b=0;
+        
+        //Cyan #00ffff
+        colors[3].r=0;
+        colors[3].g=255;
+        colors[3].b=255;
+        
+        //yellow #f8ff00
+        colors[4].r=248;
+        colors[4].g=255;
+        colors[4].b=0;
+        
+        //pink #FF00FF
+        colors[5].r=255;
+        colors[5].g=0;
+        colors[5].b=255;
+        
+        // set the default sounds to retro sounds
         sounds[0]=retro_sounds[0];
         sounds[1]=retro_sounds[1];
         sounds[2]=retro_sounds[2];
-
+        
+    }
+    else if(theme == RACE_THEME)
+    {
+        printf("Changing Theme To: RACE \n");
+        //background color -black
+        colors[0].r=0;
+        colors[0].g=0;
+        colors[0].b=0;
+        
+        // shape colors
+            // Green #B4FF00
+            colors[1].r=180;
+            colors[1].g=255;
+            colors[1].b=0;
+            
+            // Sea-Green #1EFF83 
+            colors[2].r=30;
+            colors[2].g=255;
+            colors[2].b=131;
+            
+            // Sky-Blue #37E4F5
+            colors[3].r=55;
+            colors[3].g=228;
+            colors[3].b=245;
+            
+            // Teal #DAc7c7
+            colors[4].r=218;
+            colors[4].g=199;
+            colors[4].b=199;
+            
+            //shade teal #66FFE1
+            colors[5].r=102;
+            colors[5].g=255;
+            colors[5].b=225;
+        
+        //set the default sounds to Race sounds
+        sounds[0]=race_sounds[0];
+        sounds[1]=race_sounds[1];
+        sounds[2]=race_sounds[2];
         }
     else
     {
         printf("Invalid Theme");
         return;
     }
-    //if the background sound is already playing stop it
+   
        
     sounds[0].play();
 }
@@ -671,7 +989,8 @@ void HandJesture::draw() {
 		gui.draw();
 		sounds[0].setVolume(0.00f);
 		msgFont.drawString("Press Space Key to start.", 20, ofGetHeight()-60);
-		
+        
+        
 		ofPushMatrix();
 		ofTranslate(400, 300, 0);
 		glScalef(.6, .6, 1.0f); 
@@ -703,6 +1022,23 @@ void HandJesture::draw() {
         //set the background full screen
        // ofSetFullscreen(true);
     
+        //get the elapsed time and switch the theme
+        int time =ofGetElapsedTimeMillis();
+        
+       // printf("%d \n",time%1000);
+      /*  if(time
+           %300==0)
+        {
+            //printf("change theme");
+            current_theme++;
+            if(current_theme>max_number_themes)
+            {
+                current_theme=0;
+            }
+            setTheme(current_theme);
+            //update the shape colors
+            updateShapeColors();
+        }*/
         //draw a theme background
         ofBackground(colors[0].r,colors[0].g,colors[0].b);	
         sounds[0].setVolume(0.25f);
@@ -757,7 +1093,8 @@ void HandJesture::draw() {
 			}
 			
 			//draw circle at the location of the hand
-                //ofCircle(centroidX, centroidY, 10);
+            ofSetColor(255, 255, 255);
+            ofCircle(centroidX, centroidY, 20);
             
             ofPoint hand_location;
             hand_location.x=centroidX;
@@ -979,7 +1316,7 @@ void HandJesture::checkClick(int cornerCount,int hand) {
 	if (handMode == HAND_MODE_NORMAL && cornerNums + 150 < oldCornerNums) {
 		// mouse down
 		currentCornerNums = cornerNums;
-        printf("\n MOUSE DOWN \n \n");
+        //printf("\n MOUSE DOWN \n \n");
 		handMode = HAND_MODE_CLICK;
 		//checkMouseDownCount = 0;
 		//if(!Currently_Grabbing_One_Shape)
@@ -1017,7 +1354,7 @@ void HandJesture::checkClick(int cornerCount,int hand) {
 		checkMouseDownCount++;
 		if (checkMouseDownCount > MOUSE_CLICK_FRAME) {
 			handMode = HAND_MODE_DRAG;
-             printf("\n MOUSE DOWN \n \n");
+           //  printf("\n MOUSE DOWN \n \n");
 			//soundClick.play();
 			checkMouseDownCount = 0;
 			//if(!Currently_Grabbing_One_Shape)

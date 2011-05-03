@@ -15,9 +15,12 @@ const float LWALL = 0.0f;
 const float TWALL = 0.0f;
 const float BWALL = 768.0f;
 
-ofSoundPlayer shape_sounds[10];
+ofSoundPlayer shape_sounds[5];
 int COLLISION_SOUND =2;
 int EXPLOSION_SOUND =1;
+
+const int SHAPE_SIZE_MAX = 200;//only used for rand()% expr so keep them ints
+const int SHAPE_SIZE_MIN = 50;
 
 float RGB[] = {0.0f,128.0f,255.0f};//limit color options
 
@@ -53,9 +56,9 @@ Shape::Shape(float init_location_x,float init_location_y, float init_height, flo
 /*
  * Set the shape sounds //changes with theme
  */
-void Shape::setSounds(ofSoundPlayer new_sounds[10])
+void Shape::setSounds(ofSoundPlayer new_sounds[5])
 {
-    for(int i =0; i<10; i++)
+    for(int i =0; i<5; i++)
     {
         Shape::shape_sounds[i]=new_sounds[i];
     }
@@ -168,14 +171,14 @@ void Shape::checkCollision(int index)
             {
                 //stop the sound
                 shape_sounds[COLLISION_SOUND].stop();
-                printf("Stopping the sound\n");
+                //printf("Stopping the sound\n");
             }
 			hit_count++;
 			Shape::board[i]->hit_count++;
             //play a collision sound
-            printf("COLLISION!\n");
+           // printf("COLLISION!\n");
             //shape_sounds[COLLISION_SOUND].play();
-            printf("Play Collision! \n");
+           // printf("Play Collision! \n");
 			collision_Bounce(i);
 			/***** this is where we can put switch collisions *****/
 		}
@@ -337,6 +340,7 @@ int Shape::index(){
 bool Shape::locationError(int index, bool allow_one)
 {
 	float shapeT,shapeB,shapeL,shapeR;
+    
 	if(outsideBounds_x(LWALL,RWALL))
 		printf("left or right error [%i] (%f, %f) --- (%f, %f)\n",index,getLocation_x(),getLocation_y(),getVelocity_x(),getVelocity_y());
 		
@@ -519,6 +523,17 @@ void Shape::setColor(float R, float G, float B, float A)
 }
 void Shape::setLocation(float x, float y)
 {
+   //put in check for nan (not a number) 
+    //if nan happens then do ofRandom until you get a valid number
+    while(isnan(x))
+    {
+        x=float(ofRandom(0.0f,RWALL-SHAPE_SIZE_MAX));
+
+    }
+    while(isnan(y))
+    {
+       y=float(ofRandom(0.0f,BWALL-SHAPE_SIZE_MAX)); 
+    }
 	location_x = x;
 	location_y = y;
 }
