@@ -107,6 +107,7 @@ public:
 	
 	// fonts
 	ofTrueTypeFont		msgFont;
+	ofTrueTypeFont		blockFont;
     
     // sounds
 	ofSoundPlayer		soundClick;

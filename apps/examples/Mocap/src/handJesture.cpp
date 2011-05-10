@@ -10,6 +10,11 @@
 
 //array that stores the shapes on the board
 Shape* Shape::board[10];
+int Shape::max_hits = 100;
+float Shape::min_w_white_block =400.0f;
+float Shape::min_h_white_block = 50.0f;
+bool setSIZE = true;
+
 // Struct that stores arrays of Colors and Sounds
 ofColor colors[10];
 ofSoundPlayer sounds[5];
@@ -33,15 +38,24 @@ int intial_trail_two;
 
 
 // Themes Values
-int TWILIGHT_THEME = 0;
-int GROOVY_THEME = 1;
-int ASIAN_THEME = 2;
-int JAZZ_THEME = 3;
-int CHORDAL_THEME = 4;
-int GENERIC_THEME = 5;
-int RETRO_THEME = 6;
-int RACE_THEME = 7;
-
+const int TWILIGHT_THEME = 0;
+const int GROOVY_THEME = 1;
+const int ASIAN_THEME = 2;
+const int JAZZ_THEME = 3;
+const int CHORDAL_THEME = 4;
+const int GENERIC_THEME = 5;
+const int RETRO_THEME = 6;
+const int RACE_THEME = 7;
+string string_themes[][15] ={ 
+/*twilight*/{"TWILIGHT","hello","hi","welcome","there's more","do more","more","come on","done yet?","so close"}
+/*groovy*/,{"groovy","look","see","colors","pretty","playful","change them","explore","explode","keep going"}
+/*asian*/,{"asian","well done","how nice","comfortable?","you get it?","so easy","too easy?","what now?","will it change?","maybe"}
+/*jazzy*/,{"jazzy","never ends","forever","scared?","apathetic?","whatever","leave","who needs you?","that's it","screw it"}
+/*generic*/,{"generic","you there?","im bored","hit me","come on","you wimp","more","HIT ME","that's it","one more time"}
+/*chordal*/,{"chordal","sorry","my bad","ok?","forgiven?","accept it","thanks","come back","see ya","bye"}
+/*retro*/,{"retro","play with me","i'm lonely","don't go","why stay?","help","one more","i lied","two more","i lied"}
+/*race*/,{"race","hey","that hurts","ouch","ahh","stop","pain","why?","numb","finish"}
+};
 int max_number_themes = 7;
 int current_theme=0;
 
@@ -75,17 +89,27 @@ const int SHAPE_SIZE_MIN = 50;
 
 void HandJesture::initShapeBoard(){
     //set intial board sounds
-	for(int i = 0; i<10 ; i++){
+	for(int i = 0; i<11 ; i++){
 		
         //random value for the theme 
         int color_value = ofRandom(1, 5);
         /*Edit the shape sizes to user ofrandom instead of rand... wasn't working*/
 		Shape::board[i] = new Shape(
-									float(ofRandom(0.0f,screen_width-SHAPE_SIZE_MAX)),float(ofRandom(0.0f,screen_height-SHAPE_SIZE_MAX)),		//random location 
-                                    float(ofRandom(SHAPE_SIZE_MIN, SHAPE_SIZE_MAX)),									//random width 
-							 float(ofRandom(SHAPE_SIZE_MIN, SHAPE_SIZE_MAX)),											//random height
-                            
-							 colors[color_value].r, colors[color_value].g, colors[color_value].b, float(ofRandom(0.0f, 255.0f)));				//random color
+									float(ofRandom(0.0f,screen_width-SHAPE_SIZE_MAX)),float(ofRandom(0.0f,screen_height-SHAPE_SIZE_MAX)),//random location 
+                                    float(ofRandom(SHAPE_SIZE_MIN, SHAPE_SIZE_MAX)),//random width 
+							 float(ofRandom(SHAPE_SIZE_MIN, SHAPE_SIZE_MAX)),	//random height
+							 colors[color_value].r, colors[color_value].g, colors[color_value].b, float(ofRandom(0.0f, 255.0f)));//random color
+		if(i == 10){
+			Shape::board[i]->setColor(255.0, 255.0, 255.0, 100.0);
+			if(setSIZE){
+				Shape::board[i]->setHeight(120.0f);
+				Shape::board[i]->setWidth( Shape::min_w_white_block);
+			}
+			else{
+				Shape::board[i]->setHeight(float(ofRandom(Shape::min_h_white_block,SHAPE_SIZE_MAX)));
+				Shape::board[i]->setWidth(float(ofRandom( Shape::min_w_white_block,SHAPE_SIZE_MAX)));
+			}
+		}
 		printf("loc [%i] (%f ,%f)\n",i,Shape::board[i]->getLocation_x(),Shape::board[i]->getLocation_y());
 		while(Shape::board[i]->locationError(i,false)){
 			Shape::board[i]->setLocation(float(ofRandom(0.0f,screen_width-SHAPE_SIZE_MAX)), float(ofRandom(0.0f,screen_height-SHAPE_SIZE_MAX)));
@@ -677,6 +701,9 @@ void HandJesture::setup() {
 	// Fonts
 	msgFont.loadFont("Courier New.ttf",14, true, true);
 	msgFont.setLineHeight(20.0f);
+	
+	blockFont.loadFont("Courier New.ttf",36, true, true);
+	blockFont.setLineHeight(200.0f);
     
 	/*
      try {
@@ -1138,7 +1165,7 @@ void HandJesture::draw() {
  */
 void HandJesture::drawShapes(int hand)
 {	
-	for(int i = 0; i<10 ; i++)
+	for(int i = 0; i<11 ; i++)
 	{
         //setting the colors to fill for the shape
 		ofSetColor(Shape::board[i]->getRed(), Shape::board[i]->getGreen(), Shape::board[i]->getBlue());
@@ -1155,10 +1182,17 @@ void HandJesture::drawShapes(int hand)
 		Shape::board[i]->updateTrail();
 
 		//error checking
-		Shape::board[i]->checkDamage();
-		if(Shape::board[i]->locationError(10,true)) 
+		if( Shape::board[i]->checkDamage()){
+			current_theme++;
+			if(current_theme>max_number_themes) {current_theme = 0;}
+			setTheme(current_theme);
+			updateShapeColors();
+		}
+		if(Shape::board[i]->locationError(11,true)){ 
 			printf("shape location error [%i] (%f, %f)\n",i,Shape::board[i]->getLocation_x(),Shape::board[i]->getLocation_y());
-
+			while(Shape::board[i]->locationError(11,true))
+				Shape::board[i]->setLocation(float(ofRandom(0.0f,screen_width-SHAPE_SIZE_MAX)), float(ofRandom(0.0f,screen_height-SHAPE_SIZE_MAX)));
+		}
 		//friction physics
 		Shape::board[i]->slow();
 		
@@ -1194,7 +1228,15 @@ void HandJesture::drawShapes(int hand)
 		
 		//write number of the square on the screen (just for testing but what do you think?)
 		ofSetColor(0, 0, 0);
-		//msgFont.drawString("" + ofToString(i, 0),Shape::board[i]->getLocation_x(),Shape::board[i]->getLocation_y());
+		ofFill();
+		//shows words
+		//if(i==10)blockFont.drawString(string_themes[current_theme][Shape::board[i]->hit_count/(Shape::max_hits/10)],Shape::board[i]->getLocation_x()/*+(Shape::board[i]->getWidth()/2)*/,
+		//							  Shape::board[i]->getLocation_y()+(Shape::board[i]->getHeight()*.75));
+		//shows theme
+		if(i==10)blockFont.drawString(string_themes[current_theme][0],Shape::board[i]->getLocation_x()/*+(Shape::board[i]->getWidth()/2)*/,
+									  Shape::board[i]->getLocation_y()+(Shape::board[i]->getHeight()*.75));
+		//
+
 	}
 }
 //-------------------------------------------------------------
@@ -1281,6 +1323,14 @@ void HandJesture::keyPressed (int key)
 			angle++;
 			if(angle>30) angle=30;
 			kinect.setCameraTiltAngle(angle);
+			break;     
+		case OF_KEY_LEFT:
+			if(Shape::max_hits>100)Shape::max_hits-=10;
+			printf("max_hits=%i",Shape::max_hits);
+			break;
+		case OF_KEY_RIGHT:
+			Shape::max_hits+=10;
+			printf("max_hits=%i",Shape::max_hits);
 			break;
         //move the kinect camera
 		case OF_KEY_DOWN:

@@ -15,6 +15,9 @@ public:
 	
 	//the board of 10 shapes
 	static Shape* board[10];
+	static int max_hits;
+	static float min_w_white_block;
+	static float min_h_white_block;
     //the sounds
     ofSoundPlayer shape_sounds[10];
 	struct SHADOW{
@@ -43,6 +46,7 @@ public:
 	//ofColor colors[10];
     
 	void move();
+	void moveBack();
 	void slow();
 	bool hoveredOver(float x, float y);
 
@@ -51,7 +55,7 @@ public:
 	void collision_Bounce(int i);
 	void collision_AntiMagnet(float x, float y);
 	bool locationError(int i, bool allow_one);
-	void checkDamage();
+	bool checkDamage();
 
 	//explosions
 	void createExplosion();
@@ -68,6 +72,8 @@ public:
 	void incVelocity(float vel_x, float vel_y);
 	float getVelocity_y();
 	float getVelocity_x();
+	void setHeight(float h);
+	void setWidth(float w);
 	void setColor(float R, float G, float B, float A);
 	void setLocation(float x, float y);
     void setSounds(ofSoundPlayer new_sounds[10]);
@@ -78,7 +84,8 @@ public:
 	bool isGrabbed();
 	bool isGrabbedBy(int hand);
 	//----------------------------------
-	
+		int hit_count;
+
 	
 
 private:
@@ -89,7 +96,6 @@ private:
 	bool insideBounds_x(float left, float right);
 	bool insideBounds_y( float top, float bottom);
 	int trail_index;
-	int hit_count;
 	float height;
 	float width;
 	float location_x;

@@ -70,7 +70,7 @@ void Shape::move()
 {	
 	float newx, newy;
 	//checks to to if something went wrong with velocity while loading and resets
-	if((velocity_x>100000)||(velocity_y >100000)){
+	if((velocity_x>1000)||(velocity_y >1000)){
 		printf("velocity soo high (%f ,%f)",velocity_x,velocity_y);
 		setVelocity(0.0f, 0.0f);
 	}
@@ -130,6 +130,14 @@ void Shape::move()
 	}
 	
 }
+void Shape::moveBack()
+{
+	//move location back
+	location_y-=(velocity_y);
+	location_x-=(velocity_x); 
+
+}
+
 /*
  * decreases the velocity of the shape by some percent (friction)
  */
@@ -232,37 +240,28 @@ void Shape::collision_AntiMagnet(float x, float y){
   * if hit_count is enough it explodes it and generates a new shape
   *
   */
-void Shape::checkDamage()
+bool Shape::checkDamage()
 {
-	if(hit_count>4){createExplosion();
-	hit_count = 0;
-	width = ofRandom(50, 200);
-	height = ofRandom(50, 200);
-	while(locationError(10,true)){
-		location_y = ofRandom(TWALL, BWALL-200);
-		location_x = ofRandom(LWALL, RWALL-200);
-	}
-        //removing code to randomly set colors
-	/*shape_color.red = RGB[int(ofRandom(0, 2))];
-	shape_color.blue = RGB[int(ofRandom(0, 2))];
-	shape_color.green = RGB[int(ofRandom(0, 2))];
-	if((shape_color.red ==255)&&(shape_color.blue==255)&&(shape_color.green==255))
-	{
-		int c = ofRandom(1, 3);
-		switch(c){
-			case 1:		
-				shape_color.blue = RGB[int(ofRandom(1, 2))];
-				break;
-			case 2:
-				shape_color.red = RGB[int(ofRandom(1, 2))];
-				break;
-			case 3:
-				shape_color.green = RGB[int(ofRandom(1, 2))];
-				break;
-		
+	//shape is not special and has been hit too much = EXPLODE
+	if((hit_count>4)&&(this!=Shape::board[10])){
+		createExplosion();
+		hit_count = 0;
+		width = ofRandom(50, 200);
+		height = ofRandom(50, 200);
+		while(locationError(11,true)){
+			location_y = ofRandom(TWALL, BWALL-200);
+			location_x = ofRandom(LWALL, RWALL-200);
 		}
-	}*/
-	}	
+	}
+	//SPECIAL shape is hit too much = CHANGE THEME
+	if((hit_count>max_hits)&&(this==Shape::board[10])){
+		hit_count = 0;
+		printf("hit special\n");
+		if(Shape::board[10]->getWidth()>Shape::min_w_white_block)Shape::board[10]->setWidth(Shape::board[10]->getWidth()-10);
+		if(Shape::board[10]->getHeight()>Shape::min_h_white_block)Shape::board[10]->setHeight(Shape::board[10]->getHeight()-10);
+		return TRUE;//going to change theme
+	}
+	return FALSE;
 }
 /*
  * getter for explosion
@@ -283,6 +282,10 @@ void Shape::doneExploding()
  */
 void Shape::createExplosion()
 {	
+	if(this == Shape::board[10]){
+		setWidth(BWALL);
+		setHeight(RWALL);
+	}
 	exploding = true;
     //printf("Explosion");
    // if (shape_sounds[EXPLOSION_SOUND].getIsPlaying())
@@ -496,6 +499,13 @@ float Shape::getAlpha()
 {
 	return shape_color.alpha;
 }
+void Shape::setHeight(float h){
+	height = h;
+}
+void Shape::setWidth(float w){
+	width = w;
+}
+
 void Shape::incVelocity(float vel_x, float vel_y)
 {
 	if(getVelocity_x()<0) vel_x/=-1;
