@@ -10,7 +10,7 @@
 
 //array that stores the shapes on the board
 Shape* Shape::board[10];
-int Shape::max_hits = 100;
+int Shape::max_hits = 150;
 float Shape::min_w_white_block =400.0f;
 float Shape::min_h_white_block = 50.0f;
 bool setSIZE = true;
@@ -1326,11 +1326,11 @@ void HandJesture::keyPressed (int key)
 			break;     
 		case OF_KEY_LEFT:
 			if(Shape::max_hits>100)Shape::max_hits-=10;
-			printf("max_hits=%i",Shape::max_hits);
+			printf("max_hits=%i\n",Shape::max_hits);
 			break;
 		case OF_KEY_RIGHT:
 			Shape::max_hits+=10;
-			printf("max_hits=%i",Shape::max_hits);
+			printf("max_hits=%i\n",Shape::max_hits);
 			break;
         //move the kinect camera
 		case OF_KEY_DOWN:
