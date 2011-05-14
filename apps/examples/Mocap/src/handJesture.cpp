@@ -47,14 +47,14 @@ const int GENERIC_THEME = 5;
 const int RETRO_THEME = 6;
 const int RACE_THEME = 7;
 string string_themes[][15] ={ 
-/*twilight*/{"TWILIGHT","hello","hi","welcome","there's more","do more","more","come on","done yet?","so close"}
+/*twilight*/{"CAKE?","hello","hi","welcome","there's more","do more","more","come on","done yet?","so close"}
 /*groovy*/,{"groovy","look","see","colors","pretty","playful","change them","explore","explode","keep going"}
-/*asian*/,{"asian","well done","how nice","comfortable?","you get it?","so easy","too easy?","what now?","will it change?","maybe"}
+/*asian*/,{"TOUCH!","well done","how nice","comfortable?","you get it?","so easy","too easy?","what now?","will it change?","maybe"}
 /*jazzy*/,{"jazzy","never ends","forever","scared?","apathetic?","whatever","leave","who needs you?","that's it","screw it"}
 /*generic*/,{"generic","you there?","im bored","hit me","come on","you wimp","more","HIT ME","that's it","one more time"}
 /*chordal*/,{"chordal","sorry","my bad","ok?","forgiven?","accept it","thanks","come back","see ya","bye"}
-/*retro*/,{"retro","play with me","i'm lonely","don't go","why stay?","help","one more","i lied","two more","i lied"}
-/*race*/,{"race","hey","that hurts","ouch","ahh","stop","pain","why?","numb","finish"}
+/*retro*/,{"RAW","play with me","i'm lonely","don't go","why stay?","help","one more","i lied","two more","i lied"}
+/*race*/,{"boom","hey","that hurts","ouch","ahh","stop","pain","why?","numb","finish"}
 };
 int max_number_themes = 7;
 int current_theme=0;
@@ -159,11 +159,11 @@ void HandJesture::loadSounds()
      Groovy
      */
     // background sounds
-    groovy_sounds[0].loadSound("sound/Groovy/background.mp3");
-    groovy_sounds[0].setVolume(0.50f);
-    groovy_sounds[0].setMultiPlay(true);
+	groovy_sounds[0].loadSound("sound/Groovy/background.mp3");
+    groovy_sounds[0].setVolume(0.25f);
+	groovy_sounds[0].setMultiPlay(true);
     groovy_sounds[0].setLoop(true);
-    
+
     //explosion sounds
     groovy_sounds[1].loadSound("sound/Groovy/explosion.mp3");
     groovy_sounds[1].setVolume(0.50f);
@@ -1230,11 +1230,11 @@ void HandJesture::drawShapes(int hand)
 		ofSetColor(0, 0, 0);
 		ofFill();
 		//shows words
-		//if(i==10)blockFont.drawString(string_themes[current_theme][Shape::board[i]->hit_count/(Shape::max_hits/10)],Shape::board[i]->getLocation_x()/*+(Shape::board[i]->getWidth()/2)*/,
-		//							  Shape::board[i]->getLocation_y()+(Shape::board[i]->getHeight()*.75));
-		//shows theme
-		if(i==10)blockFont.drawString(string_themes[current_theme][0],Shape::board[i]->getLocation_x()/*+(Shape::board[i]->getWidth()/2)*/,
+		if(i==10)blockFont.drawString(string_themes[current_theme][Shape::board[i]->hit_count/(Shape::max_hits/10)],Shape::board[i]->getLocation_x()/*+(Shape::board[i]->getWidth()/2)*/,
 									  Shape::board[i]->getLocation_y()+(Shape::board[i]->getHeight()*.75));
+		//shows theme
+		//if(i==10)blockFont.drawString(string_themes[current_theme][0],Shape::board[i]->getLocation_x()/*+(Shape::board[i]->getWidth()/2)*/,
+		//							  Shape::board[i]->getLocation_y()+(Shape::board[i]->getHeight()*.75));
 		//
 
 	}
